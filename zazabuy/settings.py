@@ -146,3 +146,6 @@ MPESA_CONSUMER_KEY = 'MCuswePswIXL5HThCyh3PaGGbcmGQoBSPDYT0ykFxisAF0wE'
 MPESA_CONSUMER_SECRET = 'TK7RFf5yJuCPPHmTGEAL5xBBbADYqn7QWCqCmKAGNJ3MJmDYUATgIP5JhdA23174'
 MPESA_BASE_URL = 'https://sandbox.safaricom.co.ke'
 
+CORS_ALLOWED_ORIGINS = [
+    "https://zazahbuy.netlify.app/",
+]
