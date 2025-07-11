@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Sales</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>All Sales</h2>
+  {% if sales %}
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+          <th>Buyer</th>
+          <th>Email</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sale in sales %}
+          <tr>
+            <td>{{ sale.product.name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>Ksh {{ sale.total_price }}</td>
+            <td>{{ sale.buyer_name }}</td>
+            <td>{{ sale.buyer_email }}</td>
+            <td>{{ sale.created_at|date:"d M Y H:i" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No sales yet.</p>
+  {% endif %}
+  <br>
+  <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+</body>
+</html>

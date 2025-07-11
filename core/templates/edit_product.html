@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card border-0 shadow">
+        <div class="card-header bg-primary text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Product</h3>
+            <a href="{% url 'product_list' %}" class="btn btn-light btn-sm">
+              <i class="fas fa-arrow-left me-1"></i> Back to Products
+            </a>
+          </div>
+        </div>
+        
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="row">
+              <!-- Left Column -->
+              <div class="col-md-6">
+                <!-- Basic Information -->
+                <div class="mb-4">
+                  <h5 class="text-primary mb-3"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                  <div class="form-group mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Product Name*</label>
+                    {{ form.name }}
+                    <div class="invalid-feedback">Please provide a product name.</div>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                    <label for="{{ form.category.id_for_label }}" class="form-label">Category*</label>
+                    {{ form.category }}
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                    <label for="{{ form.sku.id_for_label }}" class="form-label">SKU</label>
+                    {{ form.sku }}
+                  </div>
+                </div>
+                
+                <!-- Pricing -->
+                <div class="mb-4">
+                  <h5 class="text-primary mb-3"><i class="fas fa-tag me-2"></i>Pricing</h5>
+                  <div class="form-group mb-3">
+                    <label for="{{ form.price.id_for_label }}" class="form-label">Price*</label>
+                    <div class="input-group">
+                      <span class="input-group-text">Ksh</span>
+                      {{ form.price }}
+                    </div>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                    <label for="{{ form.discount_price.id_for_label }}" class="form-label">Discount Price</label>
+                    <div class="input-group">
+                      <span class="input-group-text">Ksh</span>
+                      {{ form.discount_price }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <!-- Product Image -->
+                <div class="mb-4">
+                  <h5 class="text-primary mb-3"><i class="fas fa-image me-2"></i>Product Image</h5>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Current Image</label>
+                    <div class="mb-2">
+                      {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="Current product image" class="img-thumbnail" style="max-height: 200px;">
+                      {% else %}
+                        <div class="text-muted">No image available</div>
+                      {% endif %}
+                    </div>
+                    <label for="{{ form.image.id_for_label }}" class="form-label">Change Image</label>
+                    {{ form.image }}
+                    <small class="form-text text-muted">Recommended size: 800×800px, JPG or PNG format</small>
+                  </div>
+                </div>
+                
+                <!-- Inventory -->
+                <div class="mb-4">
+                  <h5 class="text-primary mb-3"><i class="fas fa-boxes me-2"></i>Inventory</h5>
+                  <div class="form-group mb-3">
+                    <label for="{{ form.stock.id_for_label }}" class="form-label">Stock Quantity*</label>
+                    {{ form.stock }}
+                  </div>
+                  
+                  <div class="form-check form-switch mb-3">
+                    {{ form.is_active }}
+                    <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Active Product</label>
+                  </div>
+                  
+                  <div class="form-check form-switch mb-3">
+                    {{ form.is_featured }}
+                    <label class="form-check-label" for="{{ form.is_featured.id_for_label }}">Featured Product</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-4">
+              <h5 class="text-primary mb-3"><i class="fas fa-align-left me-2"></i>Description</h5>
+              <div class="form-group mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Product Description*</label>
+                {{ form.description }}
+              </div>
+            </div>
+            
+            <!-- Specifications -->
+            <div class="mb-4">
+              <h5 class="text-primary mb-3"><i class="fas fa-list-ul me-2"></i>Specifications</h5>
+              <div class="form-group mb-3">
+                <label for="{{ form.specifications.id_for_label }}" class="form-label">Technical Specifications</label>
+                {{ form.specifications }}
+                <small class="form-text text-muted">Enter each specification on a new line</small>
+              </div>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="submit" class="btn btn-success px-4">
+                <i class="fas fa-save me-2"></i>Save Changes
+              </button>
+              <a href="{% url 'product_list' %}" class="btn btn-outline-secondary">
+                Cancel
+              </a>
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="fas fa-trash-alt me-2"></i>Delete Product
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-exclamation-triangle me-2"></i>Confirm Deletion</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete "{{ product.name }}"? This action cannot be undone.</p>
+        <p class="text-danger"><strong>Warning:</strong> All product data including images will be permanently removed.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form action="{% url 'delete_product' product.id %}" method="POST" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Delete Permanently</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Form validation
+(function () {
+  'use strict'
+  
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+  
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
+{% endblock %}
