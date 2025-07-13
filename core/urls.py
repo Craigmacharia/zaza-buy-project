@@ -7,6 +7,9 @@ urlpatterns = [
     path('add-product/', views.add_product, name='add_product'),
     path('view-products/', views.product_list, name='view_products'),
     path('view-sales/', views.view_sales, name='view_sales'),
+    
+
+
 
     # Changed from 'admin/' to 'custom-admin/'
     path('custom-admin/products/', views.product_list, name='product_list'),

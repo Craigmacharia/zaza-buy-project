@@ -96,3 +96,5 @@ def view_sales(request):
 def product_list(request):
     products = Product.objects.all().order_by('-created_at')
     return render(request, 'view_products.html', {'products': products})
+
+

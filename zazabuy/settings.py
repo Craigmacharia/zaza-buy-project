@@ -136,16 +136,10 @@ REST_FRAMEWORK = {
     ]
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
 
-
-MPESA_ENV = 'sandbox'
-MPESA_SHORTCODE = '174379'
-MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2c2bfa59ddc89bdbcf158e97dd71a467cd2c2bfa59ddc89bdbcf158e97dd71a467cd2c2bfa59ddc89bdbcf158e97dd71a467cd2c2bfa59ddc89bdbcf1'
-MPESA_CONSUMER_KEY = 'MCuswePswIXL5HThCyh3PaGGbcmGQoBSPDYT0ykFxisAF0wE'
-MPESA_CONSUMER_SECRET = 'TK7RFf5yJuCPPHmTGEAL5xBBbADYqn7QWCqCmKAGNJ3MJmDYUATgIP5JhdA23174'
-MPESA_BASE_URL = 'https://sandbox.safaricom.co.ke'
 
 CORS_ALLOWED_ORIGINS = [
-    "https://zazahbuy.netlify.app/",
+    "https://zazahbuy.netlify.app",  # ✅ no trailing slash
 ]
+
+
